@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Dijkstra's Algorithm Calculator";
+    var nodes = ViewBag.Nodes as List<string>;
+    var result = ViewBag.Result as Amplifyn_Test_App.Models.ShortestPathData;
+}
+
+<div class="container-fluid p-0 vh-100">
+    <div class="position-relative w-100" style="height: 377px; background-color: #1154A3; margin-top: -1px;">
+        <div class="position-absolute" style="top: 79px; left: 50%; transform: translateX(-50%); width: 100%;">
+            <h2 class="dijkstra-title mb-1">Dijkstra’s Algorithm Calculator</h2>
+            <p class="subtitle-text mb-4">
+                Discovering Optimal Routes Through Nodes Using Dijkstra’s Method
+            </p>
+        </div>
+
+        <div class="position-absolute" style="top: 247px; left: 50%; transform: translateX(-50%); width: 100%;">
+            <div class="d-flex justify-content-center">
+                <div class="custom-card-big">
+                    <div class="d-flex flex-column flex-lg-row gap-3">
+
+                        <div class="half-card">
+                            <div class="half-content">
+                                <h3 class="select-path-title">Select Path</h3>
+                                <form asp-action="Calculate" method="post">
+                                    <label class="form-label node-label">From Node</label>
+                                    <select class="form-select custom-dropdown" name="fromNode" required>
+                                        <option selected disabled>Select</option>
+                                        @foreach (var node in nodes)
+                                        {
+                                            <option value="@node">@node</option>
+                                        }
+                                    </select>
+
+                                    <label class="form-label node-label">To Node</label>
+                                    <select class="form-select custom-dropdown" name="toNode" required>
+                                        <option selected disabled>Select</option>
+                                        @foreach (var node in nodes)
+                                        {
+                                            <option value="@node">@node</option>
+                                        }
+                                    </select>
+
+                                    <div class="d-flex justify-content-between mt-4">
+                                        <button class="btn btn-outline-primary clear-btn">Clear</button>
+                                        <button type="submit" class="btn btn-primary calculate-btn" style="margin-left: 10px">
+                                            Calculate <i class="bi bi-calculator ms-2"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="half-card">
+                            @if (result != null && result.Distance < int.MaxValue)
+                            {
+                                <div class="half-content">
+                                    <h3 class="select-path-title">Result</h3>
+                                    <label class="form-label node-label">From Node Name: @result.NodeNames.First()</label>
+                                    <label class="form-label node-label">To Node Name: @result.NodeNames.Last()</label>
+                                    <label class="form-label node-label">Total Distance: @result.Distance</label>
+                                    <label class="form-label node-label">Path: @string.Join(" → ", result.NodeNames)</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="half-content position-relative">
+                                    <img src="/images/man-image.jpg" alt="Man illustration" class="man-image" />
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
